@@ -1,0 +1,23 @@
+# Do NOT commit Creality's code or the closed CFS binaries to this repo.
+# This repo is documentation + original scripts only.
+*.so
+*.cpython-39.so
+K2_Series_Klipper/
+Hi_Klipper/
+k2_test/
+klippy-env/
+
+# Build / runtime artifacts
+out/
+*.o
+*.elf
+*.bin
+*.log
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

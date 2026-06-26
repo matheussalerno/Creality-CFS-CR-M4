@@ -1,0 +1,73 @@
+# =============================================================================
+#  box.cfg.example  --  ANNOTATED template for the CFS sections of printer.cfg
+# =============================================================================
+#  This is an EXPLAINED skeleton, NOT Creality's file. Take the real base from
+#  your clone of the K2 fork:  K2_Series_Klipper/config/<model>/box.cfg
+#  then adapt the values below to YOUR printer (cutter & purge geometry).
+#
+#  Add these sections to your printer.cfg (which already has [mcu], [printer],
+#  [stepper_*], [extruder], [heater_bed], probe, and a [filament_switch_sensor]).
+# =============================================================================
+
+# --- RS-485 transport: this is where your USB-RS485 dongle plugs in ----------
+[serial_485 serial485]
+serial: /dev/ttyUSB0      # your dongle (check `ls /dev/serial/by-id/`)
+baud: 230400              # CFS bus speed
+
+# --- RS-485 node discovery / addressing --------------------------------------
+[auto_addr]
+
+# --- The CFS itself ----------------------------------------------------------
+[box]
+bus: serial485                 # name of the [serial_485 ...] above
+filament_sensor: filament_sensor   # your [filament_switch_sensor filament_sensor]
+
+# ---- CUTTER geometry: TUNE TO YOUR MACHINE ----------------------------------
+# The toolhead rams the filament into a FIXED BLADE at this position.
+# You must install that blade and set these to match it.
+pre_cut_pos_x: 10              # approach position (ensures a vertical ram)
+pre_cut_pos_y: 200
+cut_pos_x: -5                  # the actual cut position (against the blade)
+cut_pos_y: 200
+
+# ---- retract/extrude after cut ----------------------------------------------
+Tn_retrude: -6                 # mm to pull filament out of the extruder gears
+Tn_retrude_velocity: 600
+Tn_extrude_temp: 220           # temp for loading
+Tn_extrude: 140
+Tn_extrude_velocity: 360
+buffer_empty_len: 30
+
+# ---- nozzle wipe + purge ("poop") positions: TUNE TO YOUR MACHINE ----------
+clean_left_pos_x: 137
+clean_left_pos_y: 378
+clean_right_pos_x: 170
+clean_right_pos_y: 378
+clean_velocity: 12000
+cut_velocity: 12000
+extrude_pos_x: 135             # purge position
+extrude_pos_y: 378
+has_extrude_pos: 1
+safe_pos_y: 350
+# switch_pin: !nozzle_mcu:PB9   # optional toolhead filament switch
+version: 1
+
+# =============================================================================
+#  The BOX_* gcode_macros (load / unload / cut sequences) come from the real
+#  box.cfg in the K2 fork. They are built from primitives the box_wrapper.so
+#  registers. Copy them as-is from the fork, e.g.:
+#
+#    [gcode_macro BOX_LOAD_MATERIAL_WITH_MATERIAL]
+#    gcode:
+#      M104
+#      BOX_CHECK_MATERIAL
+#      BOX_CUT_MATERIAL
+#      BOX_RETRUDE_MATERIAL
+#      BOX_EXTRUDE_MATERIAL
+#      BOX_EXTRUDER_EXTRUDE
+#      BOX_MATERIAL_FLUSH
+#
+#  IMPORTANT: strip non-ASCII (Chinese GBK) comments from the Creality file or
+#  Klipper may break on a UTF-8 traceback:
+#     tr -cd '\11\12\15\40-\176' < box.cfg > box_clean.cfg
+# =============================================================================

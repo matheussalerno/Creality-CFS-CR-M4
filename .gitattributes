@@ -1,0 +1,5 @@
+# Shell scripts and Klipper configs must use LF (they run on Linux / Sonic Pad)
+*.sh    text eol=lf
+*.cfg   text eol=lf
+*.example text eol=lf
+*.md    text
