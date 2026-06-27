@@ -50,6 +50,7 @@ See **[docs/04-technical-findings.md](docs/04-technical-findings.md)** for the f
 3. [Software setup, step by step](docs/03-software-setup.md) ← the core procedure
 4. [Technical findings / reverse engineering](docs/04-technical-findings.md)
 5. [Status, risks & licensing](docs/05-status-and-license.md)
+6. [Real‑printer test results & FAQ](docs/06-test-results-and-faq.md) — fork runs the CR‑M4; bed‑size / UI / CFS‑purchasing answers
 
 Helper scripts live in [`scripts/`](scripts/); a config template in [`config/`](config/).
 
@@ -60,9 +61,12 @@ Helper scripts live in [`scripts/`](scripts/); a config template in [`config/`](
 | CFS modules load on Sonic Pad (ABI compatible) | ✅ proven |
 | `CR‑M4 + CFS` config parses (0 errors) on the K2 fork klippy | ✅ proven |
 | `[box]` (CFS) object instantiates | ✅ proven |
-| K2 fork klippy reaches `ready` **with the real CR‑M4 board** | ⏳ pending hardware test |
-| CFS responds over a real USB‑RS‑485 dongle | ⏳ pending dongle |
-| Filament cutter on the CR‑M4 | 🔧 mechanical, not started |
+| **K2 fork runs the real CR‑M4** (Cartesian 450×450) → MCU configured, heaters, standby | ✅ **proven on hardware** |
+| Fork imposes no K2 geometry (bed/kinematics are config‑driven) | ✅ confirmed |
+| CFS responds over a real USB‑RS‑485 dongle | ⏳ pending dongle + CFS |
+| Filament cutter on the CR‑M4 | 🔧 mechanical, DIY |
+
+See **[docs/06 · Test results & FAQ](docs/06-test-results-and-faq.md)** for the proof and the bed‑size / UI / "buy the CFS alone?" answers.
 
 ## ⚖️ Licensing — please read
 
